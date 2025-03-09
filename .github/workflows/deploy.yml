@@ -21,4 +21,6 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           local-dir: ./   # Cartella locale con i file (di default la root del repo)
-          server-dir: /bibioneresidence.it/   # Cartella su Aruba (lascia "/" per la root di public_html)
+          server-dir: /bibioneresidence.it/   # Cartella su Aruba (verifica che sia corretta)
+          exclude: ".git-ftp-ignore"
+          dangerous-clean-slate: false  # Evita di cancellare tutto prima del deploy
