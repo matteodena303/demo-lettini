@@ -1,0 +1,538 @@
+<?php include 'layouts/session.php'; ?>
+<?php include 'layouts/head-main.php'; ?>
+<?php include '../class/MYSQL.php'; ?>
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+setlocale(LC_TIME, 'it_IT.UTF-8', 'Italian');
+$codice_pren = $_POST['codice_prenotazione'];
+$dettagliPrenotazione = getReservationAndClientData($codice_pren);
+// if ($dettagliPrenotazione) {
+//     // Qui trovi i campi della prenotazione e del cliente
+//     echo "<pre>";
+//     print_r($dettagliPrenotazione);
+//     echo "</pre>";
+// } else {
+//     echo "Nessuna prenotazione trovata per il codice: $codice";
+// }
+?>
+<style>
+    tbody,
+    td,
+    tfoot,
+    th,
+    thead,
+    tr {
+        border-width: 1px !important;
+    }
+
+    .delete-button {
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+    }
+
+    button#back-to-top {
+        display: none !important;
+    }
+
+    .fw-semibold {
+        width: 15%;
+        /* BACKGROUND: AQUA; */
+        font-size: 15px;
+    }
+
+    .td-right {
+        font-size: 15px;
+    }
+
+    .date {
+        font-size: 15px !important;
+        font-weight: 100 !important;
+        text-transform: uppercase;
+    }
+
+    .extra1 {
+        font-weight: bold;
+        color: #ee5aeb;
+    }
+
+    .extra2 {
+        font-weight: bold;
+        color: rgb(90, 49, 226);
+    }
+</style>
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+// $id_settimana = "";
+?>
+
+<head>
+    <title>Dettaglio Prenotazione | BRA</title>
+    <?php include 'layouts/title-meta.php'; ?>
+    <?php include 'layouts/head-css.php'; ?>
+    <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+</head>
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <?php include 'layouts/menu.php'; ?>
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <?php
+                            echo "<h4 class=\"mb-sm-0\">DETTAGLIO PRENOTAZIONE</h4>";
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card" id="orderList">
+                            <div class="card-header border-0">
+                                <div class="row align-items-center gy-3">
+                                    <div class="col-sm">
+                                        <!-- <h5 class="card-title mb-0">Dettaglio Prenotazione</h5> -->
+                                    </div>
+                                    <div class="col-sm-auto">
+                                        <div class="d-flex gap-1 flex-wrap">
+                                            <!-- <button type="button" class="btn btn-success add-btn" id="create-btn" onclick="window.location.href='https://demoprenotazioni.303lab.it/';">
+                                                <i class="ri-add-line align-bottom me-1"></i> Inserisci Prenotazione
+                                            </button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div style="font-size: 20px;">
+                                    <!--INSERIRE QUI I DETTAGLI DEL CLIENTE-->
+                                    <!--INSERIRE QUI I DETTAGLI DEL CLIENTE-->
+                                    <!--INSERIRE QUI I DETTAGLI DEL CLIENTE-->
+                                    <!--INSERIRE QUI I DETTAGLI DEL CLIENTE-->
+                                    <?php
+                                    $extra_lettino = 70.00;
+                                    $nomeCliente = $dettagliPrenotazione['nome_cliente'];
+                                    $email = $dettagliPrenotazione['email'];
+                                    $telefono = $dettagliPrenotazione['telefono'];
+                                    $lingua = $dettagliPrenotazione['lingua'];
+
+                                    $id_settimana1 =  $dettagliPrenotazione['id_settimana1'];
+                                    $date_settimana1 = getWeekById($id_settimana1);
+                                    // WEEK 1 - lettino 1
+                                    $lettino1_sett1 =  $dettagliPrenotazione['lettino1_sett1'];
+                                    $dati_lettino1_sett1 = getInfoLettino($lettino1_sett1);
+                                    $fila_lettino1_sett1 = $dati_lettino1_sett1['fila'] ?? "";
+                                    $prezzo_lettino1_sett1 = $dati_lettino1_sett1['sovrapprezzo'] ?? "";
+                                    // WEEK 1 - lettino 2
+                                    $lettino2_sett1 =  $dettagliPrenotazione['lettino2_sett1'];
+                                    $dati_lettino2_sett1 = getInfoLettino($lettino2_sett1);
+                                    $fila_lettino2_sett1 = $dati_lettino2_sett1['fila'] ?? "";
+                                    $prezzo_lettino2_sett1 = $dati_lettino2_sett1['sovrapprezzo'] ?? "";
+                                    // WEEK 1 - lettino 3
+                                    $lettino3_sett1 =  $dettagliPrenotazione['lettino3_sett1'];
+                                    $dati_lettino3_sett1 = getInfoLettino($lettino3_sett1);
+                                    $fila_lettino3_sett1 = $dati_lettino3_sett1['fila'] ?? "";
+                                    $prezzo_lettino3_sett1 = $dati_lettino3_sett1['sovrapprezzo'] ?? "";
+
+
+
+                                    $id_settimana2 =  $dettagliPrenotazione['id_settimana2'];
+                                    $date_settimana2 = getWeekById($id_settimana2);
+                                    // WEEK 2 - lettino 1
+                                    $lettino1_sett2 =  $dettagliPrenotazione['lettino1_sett2'];
+                                    $dati_lettino1_sett2 = getInfoLettino($lettino1_sett2);
+                                    $fila_lettino1_sett2 = $dati_lettino1_sett2['fila'] ?? "";
+                                    $prezzo_lettino1_sett2 = $dati_lettino1_sett2['sovrapprezzo'] ?? "";
+                                    // WEEK 2 - lettino 2
+                                    $lettino2_sett2 =  $dettagliPrenotazione['lettino2_sett2'];
+                                    $dati_lettino2_sett2 = getInfoLettino($lettino2_sett2);
+                                    $fila_lettino2_sett2 = $dati_lettino2_sett2['fila'] ?? "";
+                                    $prezzo_lettino2_sett2 = $dati_lettino2_sett2['sovrapprezzo'] ?? "";
+                                    // WEEK 2 - lettino 3
+                                    $lettino3_sett2 =  $dettagliPrenotazione['lettino3_sett2'];
+                                    $dati_lettino3_sett2 = getInfoLettino($lettino3_sett2);
+                                    $fila_lettino3_sett2 = $dati_lettino3_sett2['fila'] ?? "";
+                                    $prezzo_lettino3_sett2 = $dati_lettino3_sett2['sovrapprezzo'] ?? "";
+
+
+
+                                    $id_settimana3 =  $dettagliPrenotazione['id_settimana3'];
+                                    $date_settimana3 = getWeekById($id_settimana3);
+                                    // WEEK 3 - lettino 1
+                                    $lettino1_sett3 =  $dettagliPrenotazione['lettino1_sett3'];
+                                    $dati_lettino1_sett3 = getInfoLettino($lettino1_sett3);
+                                    $fila_lettino1_sett3 = $dati_lettino1_sett3['fila'] ?? "";
+                                    $prezzo_lettino1_sett3 = $dati_lettino1_sett3['sovrapprezzo'] ?? "";
+
+                                    // WEEK 3 - lettino 2
+                                    $lettino2_sett3 =  $dettagliPrenotazione['lettino2_sett3'];
+                                    $dati_lettino2_sett3 = getInfoLettino($lettino2_sett3);
+                                    $fila_lettino2_sett3 = $dati_lettino2_sett3['fila'] ?? "";
+                                    $prezzo_lettino2_sett3 = $dati_lettino2_sett3['sovrapprezzo'] ?? "";
+                                    // WEEK 3 - lettino 3
+                                    $lettino3_sett3 =  $dettagliPrenotazione['lettino3_sett3'];
+                                    $dati_lettino3_sett3 = getInfoLettino($lettino3_sett3);
+                                    $fila_lettino3_sett3 = $dati_lettino3_sett3['fila'] ?? "";
+                                    $prezzo_lettino3_sett3 = $dati_lettino3_sett3['sovrapprezzo'] ?? "";
+                                    ?>
+
+
+
+                                    <div class="table-responsive table-card">
+                                        <table class="table table-nowrap table-borderless mb-0">
+                                            <tbody>
+                                                <!-- Titolo -->
+                                                <tr class="table-light">
+                                                    <td colspan="2" class="fw-bold">Dettaglio Prenotazione [<?php echo "$codice_pren"; ?>]</td>
+                                                </tr>
+                                                <!-- Dati Principali -->
+                                                <tr>
+                                                    <td class="fw-semibold">CODICE:</td>
+                                                    <td class="td-right"><?php echo "$codice_pren"; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-semibold">CLIENTE:</td>
+                                                    <td class="td-right"><?php echo "$nomeCliente"; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-semibold">EMAIL:</td>
+                                                    <td class="td-right"><?php echo "$email"; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-semibold">TELEFONO:</td>
+                                                    <td class="td-right"><?php echo "$telefono"; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-semibold">LINGUA:</td>
+                                                    <td class="td-right"><?php echo "$lingua"; ?></td>
+                                                </tr>
+
+                                                <!-- Settimana 1 -->
+                                                <tr class="table-light">
+                                                    <td colspan="2" class="fw-bold">SETTIMANA 1:
+                                                        <span class="date">
+                                                            <?php
+                                                            // Imposta la localizzazione in italiano
+                                                            setlocale(LC_TIME, 'it_IT.UTF-8');
+
+                                                            // Controlla se l'estensione Intl è disponibile
+                                                            if (class_exists('IntlDateFormatter')) {
+                                                                $formatter = new IntlDateFormatter('it_IT', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+                                                            }
+
+                                                            if ($date_settimana1) {
+                                                                $inizio = DateTime::createFromFormat('Y-m-d', $date_settimana1['inizio_settimana']);
+                                                                $fine = DateTime::createFromFormat('Y-m-d', $date_settimana1['fine_settimana']);
+
+                                                                // Formatta la data con IntlDateFormatter se disponibile
+                                                                if (isset($formatter)) {
+                                                                    $inizio_formattato = $formatter->format($inizio);
+                                                                    $fine_formattato = $formatter->format($fine);
+                                                                } else {
+                                                                    // Fallback con DateTime::format() se Intl non è disponibile
+                                                                    $inizio_formattato = strftime('%d %B %Y', $inizio->getTimestamp());
+                                                                    $fine_formattato = strftime('%d %B %Y', $fine->getTimestamp());
+                                                                }
+
+                                                                echo "  " . $inizio_formattato . " - " . $fine_formattato;
+                                                            }
+                                                            ?>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-semibold">LETTINO 1:</td>
+                                                    <td class="td-right">
+                                                        <?php
+                                                        if ($lettino1_sett1 != "") {
+                                                            echo "$lettino1_sett1 - FILA $fila_lettino1_sett1";
+                                                            if (in_array($fila_lettino1_sett1, [1, 2, 3, 4])) {
+                                                                echo "   <span class=\"extra1\">[EXTRA FILA $fila_lettino1_sett1 +$prezzo_lettino1_sett1 €]</span>";
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </td>
+
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-semibold">LETTINO 2:</td>
+                                                    <td class="td-right">
+                                                        <?php
+                                                        if ($lettino2_sett1 != "") {
+                                                            echo "$lettino2_sett1 - FILA $fila_lettino2_sett1";
+                                                            if (in_array($fila_lettino2_sett1, [1, 2, 3, 4])) {
+                                                                echo "   <span class=\"extra1\">[EXTRA FILA $fila_lettino2_sett1 +$prezzo_lettino2_sett1 €]</span>";
+                                                            }
+                                                            echo "   <span class=\"extra2\">[EXTRA LETTINO $extra_lettino €]</span>";
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-semibold">LETTINI 3:</td>
+                                                    <td class="td-right">
+                                                        <?php
+                                                        if ($lettino3_sett1 != "") {
+                                                            echo "$lettino3_sett1 - FILA $fila_lettino3_sett1";
+                                                            if (in_array($fila_lettino3_sett1, [1, 2, 3, 4])) {
+                                                                echo "   <span class=\"extra1\">[EXTRA FILA $fila_lettino3_sett1 +$prezzo_lettino3_sett1 €]</span>";
+                                                            }
+                                                            echo "   <span class=\"extra2\">[EXTRA LETTINO $extra_lettino €]</span>";
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- Settimana 2 -->
+                                                <tr class="table-light">
+                                                    <td colspan="2" class="fw-bold">SETTIMANA 2:
+                                                        <span class="date">
+                                                            <?php
+                                                            // Imposta la localizzazione in italiano
+                                                            setlocale(LC_TIME, 'it_IT.UTF-8');
+
+                                                            // Controlla se l'estensione Intl è disponibile
+                                                            if (class_exists('IntlDateFormatter')) {
+                                                                $formatter = new IntlDateFormatter('it_IT', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+                                                            }
+
+                                                            if ($date_settimana2) {
+                                                                $inizio = DateTime::createFromFormat('Y-m-d', $date_settimana2['inizio_settimana']);
+                                                                $fine = DateTime::createFromFormat('Y-m-d', $date_settimana2['fine_settimana']);
+
+                                                                // Formatta la data con IntlDateFormatter se disponibile
+                                                                if (isset($formatter)) {
+                                                                    $inizio_formattato = $formatter->format($inizio);
+                                                                    $fine_formattato = $formatter->format($fine);
+                                                                } else {
+                                                                    // Fallback con DateTime::format() se Intl non è disponibile
+                                                                    $inizio_formattato = strftime('%d %B %Y', $inizio->getTimestamp());
+                                                                    $fine_formattato = strftime('%d %B %Y', $fine->getTimestamp());
+                                                                }
+
+                                                                echo "  " . $inizio_formattato . " - " . $fine_formattato;
+                                                            }
+                                                            ?>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-semibold">LETTINO 1:</td>
+                                                    <td class="td-right">
+                                                        <?php
+                                                        if ($lettino1_sett2 != "") {
+                                                            echo "$lettino1_sett2 - FILA $fila_lettino1_sett2";
+                                                            if (in_array($fila_lettino1_sett2, [1, 2, 3, 4])) {
+                                                                echo "   <span class=\"extra1\">[EXTRA FILA $fila_lettino1_sett2 +$prezzo_lettino1_sett2 €]</span>";
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-semibold">LETTINO 2:</td>
+                                                    <td class="td-right">
+                                                        <?php
+                                                        if ($lettino2_sett2 != "") {
+                                                            echo "$lettino2_sett2 - FILA $fila_lettino2_sett2";
+
+
+                                                            if (in_array($fila_lettino2_sett2, [1, 2, 3, 4])) {
+                                                                echo "  <span class=\"extra1\">[EXTRA FILA $fila_lettino2_sett2 +$prezzo_lettino2_sett2 €]</span>";
+                                                            }
+                                                            echo "   <span class=\"extra2\">[EXTRA LETTINO $extra_lettino €]</span>";
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-semibold">LETTINI 3:</td>
+                                                    <td class="td-right">
+                                                        <?php
+                                                        if ($lettino3_sett2 != "") {
+                                                            echo "$lettino3_sett2 - FILA $fila_lettino3_sett2";
+                                                            if (in_array($fila_lettino3_sett2, [1, 2, 3, 4])) {
+                                                                echo "   <span class=\"extra1\">[EXTRA FILA $fila_lettino3_sett2 +$prezzo_lettino3_sett2 €]</span>";
+                                                            }
+                                                            echo "   <span class=\"extra2\">[EXTRA LETTINO $extra_lettino €]</span>";
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- Settimana 3 -->
+                                                <tr class="table-light">
+                                                    <td colspan="2" class="fw-bold">SETTIMANA 3:
+                                                        <span class="date">
+                                                            <?php
+                                                            // Imposta la localizzazione in italiano
+                                                            setlocale(LC_TIME, 'it_IT.UTF-8');
+
+                                                            // Controlla se l'estensione Intl è disponibile
+                                                            if (class_exists('IntlDateFormatter')) {
+                                                                $formatter = new IntlDateFormatter('it_IT', IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+                                                            }
+
+                                                            if ($date_settimana3) {
+                                                                $inizio = DateTime::createFromFormat('Y-m-d', $date_settimana3['inizio_settimana']);
+                                                                $fine = DateTime::createFromFormat('Y-m-d', $date_settimana3['fine_settimana']);
+
+                                                                // Formatta la data con IntlDateFormatter se disponibile
+                                                                if (isset($formatter)) {
+                                                                    $inizio_formattato = $formatter->format($inizio);
+                                                                    $fine_formattato = $formatter->format($fine);
+                                                                } else {
+                                                                    // Fallback con DateTime::format() se Intl non è disponibile
+                                                                    $inizio_formattato = strftime('%d %B %Y', $inizio->getTimestamp());
+                                                                    $fine_formattato = strftime('%d %B %Y', $fine->getTimestamp());
+                                                                }
+
+                                                                echo "  " . $inizio_formattato . " - " . $fine_formattato;
+                                                            }
+                                                            ?>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-semibold">LETTINO 1:</td>
+                                                    <td class="td-right">
+                                                        <?php
+                                                        if ($lettino1_sett3 != "") {
+                                                            echo "$lettino1_sett3 - FILA $fila_lettino1_sett3";
+                                                            if (in_array($fila_lettino1_sett3, [1, 2, 3, 4])) {
+                                                                echo "   <span class=\"extra1\">[EXTRA FILA $fila_lettino1_sett3 +$prezzo_lettino1_sett3 €]</span>";
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-semibold">LETTINO 2:</td>
+                                                    <td class="td-right">
+                                                        <?php
+                                                        if ($lettino2_sett3 != "") {
+                                                            echo "$lettino2_sett3 - FILA $fila_lettino2_sett3";
+                                                            if (in_array($fila_lettino2_sett3, [1, 2, 3, 4])) {
+                                                                echo "   <span class=\"extra1\">[EXTRA FILA $fila_lettino2_sett3 +$prezzo_lettino2_sett3 €]</span>";
+                                                            }
+                                                            echo "   <span class=\"extra2\">[EXTRA LETTINO $extra_lettino €]</span>";
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="fw-semibold">LETTINI 3:</td>
+                                                    <td class="td-right">
+                                                        <?php
+                                                        if ($lettino3_sett3 != "") {
+                                                            echo "$lettino3_sett3 - FILA $fila_lettino3_sett3";
+                                                            if (in_array($fila_lettino3_sett3, [1, 2, 3, 4])) {
+                                                                echo "   <span class=\"extra1\">[EXTRA FILA $fila_lettino3_sett3 +$prezzo_lettino3_sett3 €]</span>";
+                                                            }
+                                                            echo "   <span class=\"extra2\">[EXTRA LETTINO $extra_lettino €]</span>";
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- Extra -->
+                                                <tr>
+                                                    <td class="fw-semibold">TOTALE EXTRA:</td>
+                                                    <td class="td-right"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!------------fine tabella------------->
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+        <?php include 'layouts/footer.php'; ?>
+    </div>
+    <!-- end main content-->
+</div>
+<!-- END layout-wrapper -->
+<?php include 'layouts/customizer.php'; ?>
+<?php include 'layouts/vendor-scripts.php'; ?>
+<!-- list.js min js -->
+<script src="assets/libs/list.js/list.min.js"></script>
+<!--list pagination js-->
+<script src="assets/libs/list.pagination.js/list.pagination.min.js"></script>
+<script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
+<!-- ecommerce-order init js -->
+<script src="assets/js/pages/ecommerce-order.init.js"></script>
+<!-- App js -->
+<script src="assets/js/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.21/jspdf.plugin.autotable.min.js"></script>
+<script>
+    function updateWeeks() {
+        // 1. Leggiamo anno e mese correnti
+        const yearSelect = document.getElementById('year');
+        const monthSelect = document.getElementById('month');
+        const weeksSelect = document.getElementById('weeks');
+        const year = yearSelect.value;
+        const month = monthSelect.value;
+        // 2. Chiamiamo via AJAX il nostro getWeeks.php (passando i parametri in GET)
+        fetch('getWeeks.php?year=' + year + '&month=' + month)
+            .then(response => response.json())
+            .then(data => {
+                // `data` è un array di oggetti, ciascuno { id_settimana, label }
+                // 3. Svuotiamo il contenuto della tendina "weeks"
+                weeksSelect.innerHTML = '';
+                // 4. Se l’array è vuoto, inseriamo un option di avviso
+                if (data.length === 0) {
+                    const option = document.createElement('option');
+                    option.value = '';
+                    option.textContent = 'Nessuna settimana disponibile';
+                    weeksSelect.appendChild(option);
+                } else {
+                    // 5. Popoliamo la tendina con le nuove opzioni
+                    data.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = item.id_settimana;
+                        option.textContent = item.label;
+                        weeksSelect.appendChild(option);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Errore nella fetch delle settimane:', error);
+            });
+    }
+    document.getElementById("exportPDF").addEventListener("click", function() {
+        const {
+            jsPDF
+        } = window.jspdf;
+        const doc = new jsPDF();
+        // Prendi la tabella HTML
+        doc.autoTable({
+            html: ".table"
+        });
+        // Salva il PDF
+        doc.save("mappa_settore.pdf");
+    });
+</script>
+</body>
+
+</html>
